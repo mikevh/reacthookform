@@ -1,29 +1,21 @@
-import { useReducer } from "react";
-
-const reducer = (state: any, action: any) => {
-  switch (action.type) {
-    case "INCREMENT":
-      return { count: state.count + 1 };
-    case "DECREMENT":
-      return { count: state.count - 1 };
-    default:
-      return state;
-  }
-}
+import { useSelector, useDispatch } from "react-redux";
+import { type RootState } from "./state/store";
+import { increment, decrement, incrementByAmount } from "./state/couter/counterSlice";
 
 const Home = () => {
 
-  const [state, dispatch] = useReducer(reducer, { count: 0 });
+  const dispatch = useDispatch();
+  const counter = useSelector((state: RootState) => state.counter);
 
   return (
     <div>
       <h1>Home</h1>
       <p>You are logged in.</p>
-      <p>Count: {state.count}</p>
-      <button onClick={() => dispatch({ type: "INCREMENT" })}>
+      <p>Count: {counter.count}</p>
+      <button onClick={() => dispatch(increment())}>
         Increment
       </button>
-      <button onClick={() => dispatch({ type: "DECREMENT" })}>
+      <button  onClick={() => dispatch(decrement())}>
         Decrement
       </button>
     </div>
